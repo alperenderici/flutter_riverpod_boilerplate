@@ -68,14 +68,15 @@ GoogleService-Info.plist
 # Supabase
 supabase/.env
 
-# Platform specific
+# Platform specific (iOS and Android only)
 ios/Podfile.lock
 ios/Runner.xcworkspace/
-macos/Podfile.lock
-macos/Runner.xcworkspace/
 
-# Web
-web/firebase-config.js
+# Removed platforms (not supported)
+linux/
+macos/
+web/
+windows/
 
 # Test related
 test_driver/screenshots/

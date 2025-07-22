@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/router/route_names.dart';
+import '../../../../shared/extensions/context_extensions.dart';
+import '../../../../shared/widgets/app_text.dart';
 import '../../../../shared/widgets/custom_text_field.dart';
 import '../../../../shared/widgets/loading_button.dart';
 
@@ -24,7 +26,7 @@ class SignupPage extends HookConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: context.responsivePadding,
           child: Form(
             key: formKey,
             child: SingleChildScrollView(
@@ -32,31 +34,27 @@ class SignupPage extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 40),
-                  
+                  SizedBox(height: context.responsiveSpacing(mobile: 40)),
+
                   // Logo/Title
-                  const Icon(
+                  Icon(
                     Icons.person_add_outlined,
-                    size: 80,
-                    color: Colors.blue,
+                    size: context.responsiveIconSize(mobile: 80),
+                    color: context.primaryColor,
                   ),
-                  const SizedBox(height: 32),
-                  Text(
+                  SizedBox(height: context.responsiveSpacing(mobile: 32)),
+                  AppTextStyles.headlineMedium(
                     'Create Account',
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
                     textAlign: TextAlign.center,
+                    color: context.onSurface,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
+                  SizedBox(height: context.responsiveSpacing(mobile: 8)),
+                  AppTextStyles.bodyLarge(
                     'Sign up to get started',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.grey[600],
-                    ),
                     textAlign: TextAlign.center,
+                    color: context.onSurface.withValues(alpha: 0.7),
                   ),
-                  const SizedBox(height: 48),
+                  SizedBox(height: context.responsiveSpacing(mobile: 48)),
 
                   // Display Name Field
                   CustomTextField(
@@ -71,7 +69,7 @@ class SignupPage extends HookConsumerWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: context.responsiveSpacing(mobile: 16)),
 
                   // Email Field
                   CustomTextField(
@@ -84,13 +82,15 @@ class SignupPage extends HookConsumerWidget {
                       if (value == null || value.isEmpty) {
                         return 'Email is required';
                       }
-                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                      if (!RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(value)) {
                         return 'Please enter a valid email';
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: context.responsiveSpacing(mobile: 16)),
 
                   // Password Field
                   CustomTextField(
@@ -119,7 +119,7 @@ class SignupPage extends HookConsumerWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: context.responsiveSpacing(mobile: 16)),
 
                   // Confirm Password Field
                   CustomTextField(
@@ -135,7 +135,8 @@ class SignupPage extends HookConsumerWidget {
                             : Icons.visibility,
                       ),
                       onPressed: () {
-                        isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
+                        isConfirmPasswordVisible.value =
+                            !isConfirmPasswordVisible.value;
                       },
                     ),
                     validator: (value) {
@@ -148,7 +149,7 @@ class SignupPage extends HookConsumerWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: context.responsiveSpacing(mobile: 24)),
 
                   // Sign Up Button
                   LoadingButton(
@@ -163,7 +164,7 @@ class SignupPage extends HookConsumerWidget {
                     },
                     text: 'Sign Up',
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: context.responsiveSpacing(mobile: 32)),
 
                   // Sign In Link
                   Row(
@@ -178,7 +179,7 @@ class SignupPage extends HookConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: context.responsiveSpacing(mobile: 40)),
                 ],
               ),
             ),

@@ -1,91 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
-import '../constants/app_constants.dart';
+import '../../shared/extensions/context_extensions.dart';
+import '../../shared/widgets/app_text.dart';
 import 'route_names.dart';
 
 part 'app_router.g.dart';
 
 /// GoRouter configuration provider
 @Riverpod(keepAlive: true)
-GoRouter goRouter(GoRouterRef ref) {
-  return GoRouter(
-    initialLocation: RouteNames.login,
-    debugLogDiagnostics: true,
-    routes: [
-      // Auth Routes
-      GoRoute(
-        path: RouteNames.login,
-        name: RouteNames.login,
-        builder: (context, state) => const LoginPage(),
-      ),
-      GoRoute(
-        path: RouteNames.signup,
-        name: RouteNames.signup,
-        builder: (context, state) => const SignupPage(),
-      ),
-      
-      // Main App Routes
-      GoRoute(
-        path: RouteNames.home,
-        name: RouteNames.home,
-        builder: (context, state) => const HomePage(),
-      ),
-      
-      // Settings Routes
-      GoRoute(
-        path: RouteNames.settings,
-        name: RouteNames.settings,
-        builder: (context, state) => const SettingsPage(),
-      ),
-    ],
-    errorBuilder: (context, state) => ErrorPage(error: state.error),
-    redirect: (context, state) {
-      // Add authentication logic here
-      // For now, allow all routes
-      return null;
-    },
-  );
-}
+GoRouter goRouter(Ref ref) => GoRouter(
+  initialLocation: RouteNames.login,
+  debugLogDiagnostics: true,
+  routes: [
+    // Auth Routes
+    GoRoute(
+      path: RouteNames.login,
+      name: RouteNames.login,
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: RouteNames.signup,
+      name: RouteNames.signup,
+      builder: (context, state) => const SignupPage(),
+    ),
+
+    // Main App Routes
+    GoRoute(
+      path: RouteNames.home,
+      name: RouteNames.home,
+      builder: (context, state) => const HomePage(),
+    ),
+
+    // Settings Routes
+    GoRoute(
+      path: RouteNames.settings,
+      name: RouteNames.settings,
+      builder: (context, state) => const SettingsPage(),
+    ),
+  ],
+  errorBuilder: (context, state) => ErrorPage(error: state.error),
+  redirect: (context, state) => null, // Add authentication logic here
+);
 
 /// Home page placeholder
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        actions: [
-          IconButton(
-            onPressed: () => context.go(RouteNames.settings),
-            icon: const Icon(Icons.settings),
-          ),
-        ],
-      ),
-      body: const Center(
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(
+      title: AppTextStyles.titleLarge('Home'),
+      actions: [
+        IconButton(
+          onPressed: () => context.go(RouteNames.settings),
+          icon: const Icon(Icons.settings),
+        ),
+      ],
+    ),
+    body: Center(
+      child: Padding(
+        padding: context.responsivePadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            AppTextStyles.headlineMedium(
               'Welcome to Flutter Riverpod Boilerplate!',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
+              color: context.onSurface,
             ),
-            SizedBox(height: 16),
-            Text(
+            SizedBox(height: context.responsiveSpacing(mobile: 16)),
+            AppTextStyles.bodyLarge(
               'This is a comprehensive boilerplate with clean architecture,\nRiverpod state management, and modern development practices.',
               textAlign: TextAlign.center,
+              color: context.onSurface.withValues(alpha: 0.8),
             ),
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 /// Settings page placeholder
@@ -93,16 +91,15 @@ class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: AppTextStyles.titleLarge('Settings')),
+    body: Center(
+      child: AppTextStyles.bodyLarge(
+        'Settings Page - Coming Soon!',
+        color: context.onSurface,
       ),
-      body: const Center(
-        child: Text('Settings Page - Coming Soon!'),
-      ),
-    );
-  }
+    ),
+  );
 }
 
 /// Error page
@@ -112,36 +109,36 @@ class ErrorPage extends StatelessWidget {
   final Exception? error;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Error'),
-      ),
-      body: Center(
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: AppTextStyles.titleLarge('Error')),
+    body: Center(
+      child: Padding(
+        padding: context.responsivePadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.error_outline,
-              size: 64,
-              color: Colors.red,
+              size: context.responsiveIconSize(mobile: 64),
+              color: context.errorColor,
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: context.responsiveSpacing(mobile: 16)),
+            AppTextStyles.titleLarge(
               'Oops! Something went wrong.',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+              color: context.onSurface,
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: context.responsiveSpacing(mobile: 8)),
             if (error != null)
               Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
+                padding: context.responsivePadding,
+                child: AppTextStyles.bodyMedium(
                   error.toString(),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.grey),
+                  color: context.onSurface.withValues(alpha: 0.6),
                 ),
               ),
-            const SizedBox(height: 16),
+            SizedBox(height: context.responsiveSpacing(mobile: 16)),
             ElevatedButton(
               onPressed: () => context.go(RouteNames.home),
               child: const Text('Go Home'),
@@ -149,6 +146,6 @@ class ErrorPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }

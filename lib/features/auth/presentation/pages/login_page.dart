@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/router/route_names.dart';
+import '../../../../shared/extensions/context_extensions.dart';
+import '../../../../shared/widgets/app_text.dart';
 import '../../../../shared/widgets/custom_text_field.dart';
 import '../../../../shared/widgets/loading_button.dart';
 
@@ -21,7 +23,7 @@ class LoginPage extends HookConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: context.responsivePadding,
           child: Form(
             key: formKey,
             child: Column(
@@ -29,28 +31,24 @@ class LoginPage extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Logo/Title
-                const Icon(
+                Icon(
                   Icons.lock_outline,
-                  size: 80,
-                  color: Colors.blue,
+                  size: context.responsiveIconSize(mobile: 80),
+                  color: context.primaryColor,
                 ),
-                const SizedBox(height: 32),
-                Text(
+                SizedBox(height: context.responsiveSpacing(mobile: 32)),
+                AppTextStyles.headlineMedium(
                   'Welcome Back',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
                   textAlign: TextAlign.center,
+                  color: context.onSurface,
                 ),
-                const SizedBox(height: 8),
-                Text(
+                SizedBox(height: context.responsiveSpacing(mobile: 8)),
+                AppTextStyles.bodyLarge(
                   'Sign in to your account',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Colors.grey[600],
-                  ),
                   textAlign: TextAlign.center,
+                  color: context.onSurface.withValues(alpha: 0.7),
                 ),
-                const SizedBox(height: 48),
+                SizedBox(height: context.responsiveSpacing(mobile: 48)),
 
                 // Email Field
                 CustomTextField(
@@ -63,13 +61,15 @@ class LoginPage extends HookConsumerWidget {
                     if (value == null || value.isEmpty) {
                       return 'Email is required';
                     }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                    if (!RegExp(
+                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                    ).hasMatch(value)) {
                       return 'Please enter a valid email';
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: context.responsiveSpacing(mobile: 16)),
 
                 // Password Field
                 CustomTextField(
@@ -98,7 +98,7 @@ class LoginPage extends HookConsumerWidget {
                     return null;
                   },
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: context.responsiveSpacing(mobile: 24)),
 
                 // Login Button
                 LoadingButton(
@@ -113,7 +113,7 @@ class LoginPage extends HookConsumerWidget {
                   },
                   text: 'Sign In',
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: context.responsiveSpacing(mobile: 16)),
 
                 // Forgot Password
                 TextButton(
@@ -122,7 +122,7 @@ class LoginPage extends HookConsumerWidget {
                   },
                   child: const Text('Forgot Password?'),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: context.responsiveSpacing(mobile: 32)),
 
                 // Sign Up Link
                 Row(
