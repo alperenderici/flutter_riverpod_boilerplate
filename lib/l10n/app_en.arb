@@ -1,0 +1,141 @@
+{
+  "@@locale": "en",
+  "appTitle": "Flutter Riverpod Boilerplate",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "welcome": "Welcome",
+  "@welcome": {
+    "description": "Welcome message"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button text"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "Forgot password link text"
+  },
+  "dontHaveAccount": "Don't have an account?",
+  "@dontHaveAccount": {
+    "description": "Sign up prompt text"
+  },
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Sign up button text"
+  },
+  "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {
+    "description": "Login prompt text"
+  },
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+  "firstName": "First Name",
+  "@firstName": {
+    "description": "First name field label"
+  },
+  "lastName": "Last Name",
+  "@lastName": {
+    "description": "Last name field label"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings page title"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme setting label"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language setting label"
+  },
+  "lightTheme": "Light",
+  "@lightTheme": {
+    "description": "Light theme option"
+  },
+  "darkTheme": "Dark",
+  "@darkTheme": {
+    "description": "Dark theme option"
+  },
+  "systemTheme": "System",
+  "@systemTheme": {
+    "description": "System theme option"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button text"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error message title"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Success message title"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading message"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button text"
+  },
+  "noInternetConnection": "No internet connection",
+  "@noInternetConnection": {
+    "description": "No internet connection error message"
+  },
+  "somethingWentWrong": "Something went wrong",
+  "@somethingWentWrong": {
+    "description": "Generic error message"
+  },
+  "emailRequired": "Email is required",
+  "@emailRequired": {
+    "description": "Email validation error"
+  },
+  "emailInvalid": "Please enter a valid email",
+  "@emailInvalid": {
+    "description": "Email format validation error"
+  },
+  "passwordRequired": "Password is required",
+  "@passwordRequired": {
+    "description": "Password validation error"
+  },
+  "passwordTooShort": "Password must be at least {minLength} characters",
+  "@passwordTooShort": {
+    "description": "Password length validation error",
+    "placeholders": {
+      "minLength": {
+        "type": "int",
+        "example": "8"
+      }
+    }
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Password confirmation validation error"
+  }
+}

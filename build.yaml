@@ -1,0 +1,23 @@
+# Build configuration for code generation
+targets:
+  $default:
+    builders:
+      # Freezed code generation
+      freezed:
+        generate_for:
+          - lib/**/*.dart
+
+      # JSON serialization code generation
+      json_serializable:
+        generate_for:
+          - lib/**/*.dart
+
+      # Riverpod code generation
+      riverpod_generator:
+        generate_for:
+          - lib/**/*.dart
+
+      # Hive code generation
+      hive_generator:
+        generate_for:
+          - lib/**/*.dart

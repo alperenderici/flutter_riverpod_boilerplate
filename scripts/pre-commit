@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Pre-commit hook for Flutter Riverpod Boilerplate
+# This script runs before each commit to ensure code quality
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if Flutter is available
+if ! command -v flutter &> /dev/null; then
+    echo "❌ Flutter is not installed or not in PATH"
+    exit 1
+fi
+
+# Check if we're in a Flutter project
+if [ ! -f "pubspec.yaml" ]; then
+    echo "❌ Not in a Flutter project directory"
+    exit 1
+fi
+
+# Get dependencies
+echo "📦 Getting dependencies..."
+flutter pub get
+
+# Run code generation if needed
+if [ -d "lib" ] && grep -r "@freezed\|@riverpod\|@JsonSerializable" lib/ > /dev/null 2>&1; then
+    echo "🔧 Running code generation..."
+    flutter packages pub run build_runner build --delete-conflicting-outputs
+fi
+
+# Format code
+echo "🎨 Formatting code..."
+dart format lib/ test/ --set-exit-if-changed
+
+# Analyze code
+echo "🔍 Analyzing code..."
+flutter analyze
+
+# Run tests
+echo "🧪 Running tests..."
+flutter test
+
+echo "✅ All pre-commit checks passed!"
