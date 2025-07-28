@@ -1,7 +1,7 @@
 # Flutter Riverpod Boilerplate Makefile
 # Provides convenient commands for development workflow
 
-.PHONY: help clean get build test analyze format check generate run-dev run-prod
+.PHONY: help clean get build test analyze format check generate run-dev run-staging run-prod run-dev-release run-staging-release run-prod-release
 
 # Default target
 help:
@@ -13,8 +13,12 @@ help:
 	@echo "  make generate     - Run code generation"
 	@echo ""
 	@echo "Development:"
-	@echo "  make run-dev      - Run app in debug mode"
-	@echo "  make run-prod     - Run app in release mode"
+	@echo "  make run-dev      - Run app in development flavor (debug)"
+	@echo "  make run-staging  - Run app in staging flavor (debug)"
+	@echo "  make run-prod     - Run app in production flavor (debug)"
+	@echo "  make run-dev-release      - Run app in development flavor (release)"
+	@echo "  make run-staging-release  - Run app in staging flavor (release)"
+	@echo "  make run-prod-release     - Run app in production flavor (release)"
 	@echo "  make format       - Format code"
 	@echo "  make analyze      - Analyze code"
 	@echo "  make check        - Run format + analyze"
@@ -27,9 +31,15 @@ help:
 	@echo "  make test-coverage - Run tests with coverage"
 	@echo ""
 	@echo "Build:"
-	@echo "  make build-android - Build Android APK"
-	@echo "  make build-ios     - Build iOS app"
-	@echo "  make build-web     - Build web app"
+	@echo "  make build-android         - Build Android APK (production)"
+	@echo "  make build-android-dev     - Build Android APK (development)"
+	@echo "  make build-android-staging - Build Android APK (staging)"
+	@echo "  make build-ios             - Build iOS app (production)"
+	@echo "  make build-ios-dev         - Build iOS app (development)"
+	@echo "  make build-ios-staging     - Build iOS app (staging)"
+	@echo "  make build-web             - Build web app (production)"
+	@echo "  make build-web-dev         - Build web app (development)"
+	@echo "  make build-web-staging     - Build web app (staging)"
 	@echo ""
 
 # Setup & Dependencies
@@ -46,12 +56,24 @@ generate:
 generate-watch:
 	flutter packages pub run build_runner watch --delete-conflicting-outputs
 
-# Development
+# Development - Flavor-specific run commands
 run-dev:
-	flutter run --debug
+	flutter run --debug --target lib/main_development.dart --flavor development
+
+run-staging:
+	flutter run --debug --target lib/main_staging.dart --flavor staging
 
 run-prod:
-	flutter run --release
+	flutter run --debug --target lib/main_production.dart --flavor production
+
+run-dev-release:
+	flutter run --release --target lib/main_development.dart --flavor development
+
+run-staging-release:
+	flutter run --release --target lib/main_staging.dart --flavor staging
+
+run-prod-release:
+	flutter run --release --target lib/main_production.dart --flavor production
 
 format:
 	dart format lib/ test/ --set-exit-if-changed
@@ -78,18 +100,42 @@ test-coverage:
 	flutter test --coverage
 	genhtml coverage/lcov.info -o coverage/html
 
-# Build
+# Build - Flavor-specific build commands
 build-android:
-	flutter build apk --release
+	flutter build apk --release --target lib/main_production.dart --flavor production
+
+build-android-dev:
+	flutter build apk --release --target lib/main_development.dart --flavor development
+
+build-android-staging:
+	flutter build apk --release --target lib/main_staging.dart --flavor staging
 
 build-android-bundle:
-	flutter build appbundle --release
+	flutter build appbundle --release --target lib/main_production.dart --flavor production
+
+build-android-bundle-dev:
+	flutter build appbundle --release --target lib/main_development.dart --flavor development
+
+build-android-bundle-staging:
+	flutter build appbundle --release --target lib/main_staging.dart --flavor staging
 
 build-ios:
-	flutter build ios --release
+	flutter build ios --release --target lib/main_production.dart --flavor production
+
+build-ios-dev:
+	flutter build ios --release --target lib/main_development.dart --flavor development
+
+build-ios-staging:
+	flutter build ios --release --target lib/main_staging.dart --flavor staging
 
 build-web:
-	flutter build web --release
+	flutter build web --release --target lib/main_production.dart
+
+build-web-dev:
+	flutter build web --release --target lib/main_development.dart
+
+build-web-staging:
+	flutter build web --release --target lib/main_staging.dart
 
 # Utilities
 upgrade:

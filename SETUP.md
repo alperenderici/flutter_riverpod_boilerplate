@@ -19,7 +19,65 @@ dart run build_runner build --delete-conflicting-outputs
 ### 3. Run the App
 
 ```bash
-flutter run
+# Development flavor (default)
+flutter run --flavor development --target lib/main_development.dart
+
+# Or use make commands
+make run-dev      # Development
+make run-staging  # Staging
+make run-prod     # Production
+```
+
+## 🎯 Flavors
+
+This project supports three flavors for different environments:
+
+### Available Flavors
+
+- **Development** (`development`): Local development with debug features
+- **Staging** (`staging`): Testing environment with production-like settings
+- **Production** (`production`): Production release build
+
+### Flavor Features
+
+Each flavor has different configurations:
+
+| Feature | Development | Staging | Production |
+|---------|-------------|---------|------------|
+| Debug Features | ✅ Enabled | ❌ Disabled | ❌ Disabled |
+| Logging | ✅ Verbose | ✅ Info | ❌ Error Only |
+| Mock Data | ✅ Enabled | ❌ Disabled | ❌ Disabled |
+| Debug Banner | ✅ Shown | ❌ Hidden | ❌ Hidden |
+| API Endpoint | dev-api.example.com | staging-api.example.com | api.example.com |
+
+### Running Flavors
+
+```bash
+# Development (default)
+make run-dev
+flutter run --flavor development --target lib/main_development.dart
+
+# Staging
+make run-staging
+flutter run --flavor staging --target lib/main_staging.dart
+
+# Production
+make run-prod
+flutter run --flavor production --target lib/main_production.dart
+```
+
+### Building Flavors
+
+```bash
+# Android APK
+make build-android-dev      # Development
+make build-android-staging  # Staging
+make build-android          # Production
+
+# iOS
+make build-ios-dev          # Development
+make build-ios-staging      # Staging
+make build-ios              # Production
 ```
 
 ## 🔧 Configuration

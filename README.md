@@ -69,6 +69,50 @@ A comprehensive, production-ready Flutter boilerplate featuring **Clean Architec
 - **GitHub Actions** CI/CD (optional)
 - **Puro** version management support
 
+## 🎯 Flavors
+
+This project supports multiple flavors to manage different environments:
+
+### Available Flavors
+
+| Flavor | Description | App Name | Bundle ID | API Endpoint |
+|--------|-------------|----------|-----------|--------------|
+| **development** | Local development with debug features | Flutter Riverpod Boilerplate (Dev) | `com.example.flutter_riverpod_boilerplate.dev` | `https://dev-api.example.com` |
+| **staging** | Testing environment with production-like settings | Flutter Riverpod Boilerplate (Staging) | `com.example.flutter_riverpod_boilerplate.staging` | `https://staging-api.example.com` |
+| **production** | Production release build | Flutter Riverpod Boilerplate | `com.example.flutter_riverpod_boilerplate` | `https://api.example.com` |
+
+### Running Different Flavors
+
+```bash
+# Development (default)
+make run-dev
+flutter run --flavor development --target lib/main_development.dart
+
+# Staging
+make run-staging
+flutter run --flavor staging --target lib/main_staging.dart
+
+# Production
+make run-prod
+flutter run --flavor production --target lib/main_production.dart
+```
+
+### Flavor Configuration
+
+Each flavor has its own configuration defined in `lib/core/constants/flavor_config.dart`:
+
+- **App Name**: Different app names for easy identification
+- **Bundle ID**: Unique bundle identifiers for each flavor
+- **API Endpoints**: Different backend URLs for each environment
+- **Debug Features**: Development flavor has additional debugging tools
+- **Logging**: Different logging levels per flavor
+
+### Default Flavor
+
+When no flavor is specified, the app defaults to the **development** flavor for easier development workflow.
+
+📖 **For detailed flavor documentation, see [docs/FLAVORS.md](docs/FLAVORS.md)**
+
 ## 📁 Project Structure
 
 ```
@@ -132,12 +176,37 @@ test/
 
 4. **Run the app**
    ```bash
+   # Development flavor
    make run-dev
    # or
-   flutter run
+   flutter run --flavor development --target lib/main_development.dart
+
+   # Staging flavor
+   make run-staging
+   # or
+   flutter run --flavor staging --target lib/main_staging.dart
+
+   # Production flavor
+   make run-prod
+   # or
+   flutter run --flavor production --target lib/main_production.dart
    ```
 
 ## ⚙️ Configuration
+
+### Flavors
+
+This boilerplate supports three flavors for different environments:
+
+- **Development** (`development`): For local development with debug features enabled
+- **Staging** (`staging`): For testing with production-like settings
+- **Production** (`production`): For release builds with optimized settings
+
+Each flavor has its own:
+- App name and bundle identifier
+- API endpoints
+- Feature flags and debug settings
+- Build configurations
 
 ### Feature Toggles
 
@@ -383,19 +452,74 @@ This boilerplate supports:
 ## 🚀 Deployment
 
 ### Android
+
+Build APKs for different flavors:
 ```bash
-make build-android        # APK
-make build-android-bundle # App Bundle (recommended)
+# Development
+make build-android-dev
+# or
+flutter build apk --flavor development --target lib/main_development.dart
+
+# Staging
+make build-android-staging
+# or
+flutter build apk --flavor staging --target lib/main_staging.dart
+
+# Production
+make build-android        # Default production build
+# or
+flutter build apk --flavor production --target lib/main_production.dart
+```
+
+Build App Bundles (recommended for Play Store):
+```bash
+# Development
+make build-android-bundle-dev
+
+# Staging
+make build-android-bundle-staging
+
+# Production
+make build-android-bundle
 ```
 
 ### iOS
+
+Build for different flavors:
 ```bash
-make build-ios
+# Development
+make build-ios-dev
+# or
+flutter build ios --flavor development --target lib/main_development.dart
+
+# Staging
+make build-ios-staging
+# or
+flutter build ios --flavor staging --target lib/main_staging.dart
+
+# Production
+make build-ios           # Default production build
+# or
+flutter build ios --flavor production --target lib/main_production.dart
+```
+
+**Note**: For iOS flavors to work properly, you need to configure Xcode schemes. Run the configuration script:
+```bash
+./scripts/configure_ios_flavors.sh
 ```
 
 ### Web
+
+Build for different flavors:
 ```bash
-make build-web
+# Development
+make build-web-dev
+
+# Staging
+make build-web-staging
+
+# Production
+make build-web           # Default production build
 ```
 
 ## 🤝 Contributing

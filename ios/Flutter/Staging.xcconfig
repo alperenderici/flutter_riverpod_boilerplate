@@ -1,0 +1,7 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+
+// Staging flavor configuration
+PRODUCT_BUNDLE_IDENTIFIER = com.example.flutterRiverpodBoilerplate.staging
+PRODUCT_NAME = Flutter Riverpod Boilerplate (Staging)
+FLUTTER_TARGET = lib/main_staging.dart

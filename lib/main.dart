@@ -4,12 +4,18 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'core/constants/app_constants.dart';
+import 'core/constants/flavor_config.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize default flavor if not already initialized
+  if (!FlavorConfig.isInitialized) {
+    FlavorConfig.initializeForFlavor(Flavor.development);
+  }
 
   // Set preferred orientations
   await SystemChrome.setPreferredOrientations([
@@ -30,7 +36,8 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp.router(
       title: AppConstants.appName,
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner:
+          FlavorConfig.instance.getConfig<bool>('showDebugBanner') ?? false,
 
       // Routing
       routerConfig: router,
